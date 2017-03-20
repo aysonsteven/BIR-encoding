@@ -23,4 +23,9 @@ export class HeaderComponent {
       alert(error.message);
     });
   }
+  onClickLogout(){
+    this.user.logout().subscribe( res =>{
+      console.log(res);
+    })
+  }
 }

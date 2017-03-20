@@ -1,35 +1,45 @@
 <header>
-  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-
-    <!-- Brand -->
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <a class="navbar-brand" routerLink=""><img class="logo" src="../../assets/img/bir.JPG" alt=""></a>
-
-    <!-- Links -->
-    <ul class="nav navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/encode">Encode</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/help">Guidelines</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav pull-xs-right">
-      <li class="nav-item">
-        <input class="form-control form-control-sm" type="text" placeholder="Username">
-      </li>
-      <li class="nav-item">
-        <input class="form-control form-control-sm" type="password" placeholder="Password">
-      </li>
-      <li class="nav-item">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/encode">Encode</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/help">Guidelines</a>
+        </li>
+        <li class="nav-item pull-xs-right" *ngIf="user.logged" >
+          <a class="nav-link" routerLink="" (click)="onClickLogout()">Logout</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav pull-xs-right">
+        <!--<li class="nav-item" *ngIf="user.logged" >-->
+        <!--<a class="nav-link" routerLink="" (click)="onClickLogout()">Logout</a>-->
+        <!--</li>-->
+        <li class="nav-item dropdown" *ngIf="user.logged">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <hr>
+            <a class="dropdown-item" routerLink="" (click)="onClickLogout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0" *ngIf=" ! user.logged">
+        <input class="form-control form-control-sm" name="id" [(ngModel)]="form.id" type="text" placeholder="Username">
+        <input class="form-control form-control-sm" name="password" [(ngModel)]="form.password" type="password" placeholder="Password">
         <button class="btn btn-primary btn-sm" (click)="onClickLogin()">Login</button>
-      </li>
-    </ul>
+      </form>
+
+    </div>
   </nav>
-
-  <!-- Set body height so that scrollbars grow -->
-
 </header>
-<br>
+
