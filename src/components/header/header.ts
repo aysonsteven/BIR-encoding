@@ -1,24 +1,35 @@
-import { Component } from '@angular/core';
-import { USER_LOGIN, USER_LOGIN_RESPONSE,RESPONSE } from './../../bir-backend/interface';
-import { User } from './../../bir-backend/user';
+import { Component, OnInit } from '@angular/core';
+import { USER_LOGIN, USER_LOGIN_RESPONSE,RESPONSE, User } from './../../bir-backend/angular-backend';
 import {map} from "rxjs/operator/map";
 @Component( {
   selector: 'header-component',
   templateUrl: 'header.html'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   loading: boolean = false;
   result: USER_LOGIN_RESPONSE = <USER_LOGIN_RESPONSE> {};
   form: USER_LOGIN = <USER_LOGIN>{};
+  userData = {};
 
   constructor(private user: User) {
 
   }
 
+  ngOnInit(){
+    this.loadData();
+  }
+  loadData() {
+    if( ! this.user.logged ) return;
+    this.user.data().subscribe( res =>{
+      this.userData = res.data.user;
+    }, err => console.error( err ) );
+  }
+
   onClickLogin() {
     this.user.login(this.form).subscribe(res => {
-      alert(res);
+      this.loadData();
+      this.form= <USER_LOGIN>{};
     }, error => {
       alert(error.message);
     });

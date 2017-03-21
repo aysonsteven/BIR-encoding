@@ -10,21 +10,20 @@
           <a class="nav-link" routerLink="">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/encode">Encode</a>
+          <a *ngIf="user.logged" class="nav-link" routerLink="/encode">Encode</a>
+          <a *ngIf="!user.logged" class="nav-link disabled" href="#">Encode</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/help">Guidelines</a>
         </li>
-        <li class="nav-item pull-xs-right" *ngIf="user.logged" >
-          <a class="nav-link" routerLink="" (click)="onClickLogout()">Logout</a>
-        </li>
+
       </ul>
       <ul class="nav navbar-nav pull-xs-right">
         <!--<li class="nav-item" *ngIf="user.logged" >-->
         <!--<a class="nav-link" routerLink="" (click)="onClickLogout()">Logout</a>-->
         <!--</li>-->
         <li class="nav-item dropdown" *ngIf="user.logged">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ userData.id }}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>

@@ -1,7 +1,8 @@
 export const TableData:Array<any> = [
   {
-    'check': `<input type='checkbox' class='form-check-input'>`,
+    'check': '1',
     'Supplier': 'WIlcon Depot',
-    'TIN': '123-123-123-123'
+    'TIN': '123-123-123-123',
+    'amount': '123,000'
   }
 ];

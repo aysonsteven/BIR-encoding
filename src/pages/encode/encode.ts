@@ -7,9 +7,10 @@ import { TableData } from './table-data';
 export class EncodePage implements OnInit {
   public rows:Array<any> = [];
   public columns:Array<any> = [
-    {title: '', name: 'check'},
-    {title: 'Supplier.', name: 'Supplier', sort: '', filtering: {filterString: '', placeholder: 'Filter by supplier.'}},
-    {title: 'TIN #', name: 'TIN'}
+    { title: '#', name: 'check' },
+    { title: 'Supplier.', name: 'Supplier' },
+    { title: 'TIN #', name: 'TIN'},
+    { title: 'Total Amount Due', name:'amount'}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
