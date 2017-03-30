@@ -1,30 +1,89 @@
 <header-component></header-component>
 <h1>Encode Page</h1>
 
+<!--
 
-<div class="row">
-  <div class="col-md-4">
-    <input *ngIf="config.filtering" placeholder="Filter all columns"
-           [ngTableFiltering]="config.filtering"
-           class="form-control"
-           (tableChanged)="onChangeTable(config)"/>
+modal
+
+
+-->
+
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="modal-dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Input Suppliers</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control form-control-sm">
+        <input type="text" class="form-control form-control-sm">
+      </div>
+    </div>
   </div>
 </div>
 
+<!--
 
-<ng-table [config]="config.sorting"
-          (tableChanged)="onChangeTable(config)"
-          [rows]="rows" [columns]="columns">
-</ng-table>
-<pagination *ngIf="config.paging"
-            class="pagination-sm"
-            [(ngModel)]="page"
-            [totalItems]="length"
-            [itemsPerPage]="itemsPerPage"
-            [maxSize]="maxSize"
-            [boundaryLinks]="true"
-            [rotate]="false"
-            (pageChanged)="onChangeTable(config, $event)"
-            (numPages)="numPages = $event">
-</pagination>
-<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+
+
+  modal
+-->
+
+<div class="row">
+  <div class="col-md-4">
+  </div>
+</div>
+<div class="wrapper">
+<div class="fresh-table full-color-blue full-screen-table">
+  <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+          Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+  -->
+
+  <div class="toolbar">
+    <button  class="btn btn-default" (click)="onClickAddSupplier()">Add Supplier</button>
+  </div>
+
+  <table id="fresh-table" class="table">
+    <thead>
+    <th data-field="id">#</th>
+    <th data-field="supplier" data-sortable="true">Supplier</th>
+    <th data-field="tin" data-sortable="true">VAT TIN #</th>
+    <th data-field="vatable" data-sortable="true">Total Vatable amount</th>
+    <th data-field="tax">Total Input Tax</th>
+    <th data-field="due">Total Amount Due</th>    
+    <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>1</td>
+      <td>Samsung</td>
+      <td>458-345-324-543</td>
+      <td>1,200</td>
+      <td>500</td>
+      <td>1,700</td>
+      <td> <button class="btn btn-sm btn-primary" (click)="onClickManage()">Manage</button> <button class="btn btn-sm btn-primary">Delete</button> </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>LG</td>
+      <td>123-534-364-734</td>
+      <td>1,500</td>
+      <td>300</td>
+      <td>1,800</td>
+      <td> <button class="btn btn-sm btn-primary">Manage</button> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+
+<!--<ng-table [config]="config.sorting"-->
+          <!--(tableChanged)="onChangeTable(config)"-->
+          <!--[rows]="rows" [columns]="columns">-->
+<!--</ng-table>-->

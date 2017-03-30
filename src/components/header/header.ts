@@ -23,7 +23,10 @@ export class HeaderComponent implements OnInit{
     if( ! this.user.logged ) return;
     this.user.data().subscribe( res =>{
       this.userData = res.data.user;
-    }, err => console.error( err ) );
+    }, err => {
+      this.onClickLogout();
+      alert(" login session expired, Please login again" );
+    } );
   }
 
   onClickLogin() {

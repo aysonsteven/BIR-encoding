@@ -1,8 +1,10 @@
-.logo{
-  height: 1.9em;
-}
-.pull-xs-right{
-  //float: right;
+header-component{
+  .logo{
+    height: 2.5rem;
+  }
+
+  .pull-right{
+    padding-right: 3em;
+  }
 
 }
-
