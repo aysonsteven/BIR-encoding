@@ -9,7 +9,7 @@ modal
 -->
 
 
-<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="modal-dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #inputSupplier="bs-modal" class="modal fade" tabindex="-1" role="modal-dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,8 +19,9 @@ modal
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" class="form-control form-control-sm">
-        <input type="text" class="form-control form-control-sm">
+        <input type="text" [(ngModel)]="form.Supplier" class="form-control form-control-sm">
+        <input type="text" [(ngModel)]="form.TIN" class="form-control form-control-sm">
+        <button class="btn btn-default btn-sm" (click)="onClickPost()">Submit</button>
       </div>
     </div>
   </div>
@@ -33,54 +34,48 @@ modal
   modal
 -->
 
-<div class="row">
-  <div class="col-md-4">
-  </div>
-</div>
-<div class="wrapper">
-<div class="fresh-table full-color-blue full-screen-table">
+
   <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
           Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
   -->
-
-  <div class="toolbar">
-    <button  class="btn btn-default" (click)="onClickAddSupplier()">Add Supplier</button>
-  </div>
-
-  <table id="fresh-table" class="table">
-    <thead>
-    <th data-field="id">#</th>
-    <th data-field="supplier" data-sortable="true">Supplier</th>
-    <th data-field="tin" data-sortable="true">VAT TIN #</th>
-    <th data-field="vatable" data-sortable="true">Total Vatable amount</th>
-    <th data-field="tax">Total Input Tax</th>
-    <th data-field="due">Total Amount Due</th>    
-    <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-    </thead>
-    <tbody>
-    <tr>
-      <td>1</td>
-      <td>Samsung</td>
-      <td>458-345-324-543</td>
-      <td>1,200</td>
-      <td>500</td>
-      <td>1,700</td>
-      <td> <button class="btn btn-sm btn-primary" (click)="onClickManage()">Manage</button> <button class="btn btn-sm btn-primary">Delete</button> </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>LG</td>
-      <td>123-534-364-734</td>
-      <td>1,500</td>
-      <td>300</td>
-      <td>1,800</td>
-      <td> <button class="btn btn-sm btn-primary">Manage</button> </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-
-</div>
+<div class="wrapper">
+    <div class="fresh-table full-color-orange full-screen-table">
+    <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
+            Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+    -->
+        
+        <div class="toolbar">
+            <button class="btn btn-default" (click)="onClickAddSupplier()">Add Supplier</button>
+            <button class="btn btn-default" (click)="onClickDownload()">Download Excel File</button>
+            <button class="btn btn-default" >Import Excel File</button>
+        </div>
+        
+        <table id="fresh-table" class="table">
+            <thead>
+                <th data-field="id">ID</th>
+            	<th data-field="name" data-sortable="true">Name of Supplier</th>
+            	<th data-field="tin" data-sortable="true">TIN</th>
+            	<th data-field="ammount" data-sortable="true">Total ammount</th>
+            	<th data-field="tax">Total Tax</th>
+              <th data-field="due">Total Amount Due</th>
+            	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+            </thead>
+            <tbody *ngFor="let post of table">
+                <tr>
+                	<td>{{ post.idx }}</td>
+                	<td><table-component [item]="post.Supplier"></table-component></td>
+                	<td><table-component [item]="post.TIN"></table-component></td>
+                	<td></td>
+                	<td></td>
+                  <td></td>
+                	<td>
+                    <button class="btn btn-sm btn-primary" (click)="onClickInput()">Input</button>
+                    <button class="btn btn-sm btn-primary"(click)="onClickDelete( post.idx, post.Supplier )">Delete</button>
+                    
+                  </td>
+                </tr>
+            </tbody>
+        </table>
 
 
 <!--<ng-table [config]="config.sorting"-->

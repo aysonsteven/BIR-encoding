@@ -13,9 +13,10 @@ import { HomePage } from '../pages/home/home';
 import { HelpPage } from '../pages/help/help';
 import { EncodePage } from '../pages/encode/encode';
 import { ProfilePage } from '../pages/profile/profile';
+import { InputPage } from '../pages/input/input';
 
 import { HeaderComponent } from './../components/header/header';
-
+import { TableComponent } from '../components/table/table';
 
 ///added module
 import { AngularBackend } from './../bir-backend/angular-backend';
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
   { path: 'help', component: HelpPage },
   { path: '', component: HomePage },
   { path: 'encode', component: EncodePage },
-  { path: 'profile', component: ProfilePage}
+  { path: 'profile', component: ProfilePage},
+  { path: 'inputs', component: InputPage }
 ];
 
 @NgModule({
@@ -33,7 +35,9 @@ const appRoutes: Routes = [
     HelpPage,
     EncodePage,
     HeaderComponent,
-    ProfilePage
+    ProfilePage,
+    InputPage,
+    TableComponent  
   ],
   imports: [
     BrowserModule,

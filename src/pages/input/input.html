@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <div class="fresh-table full-color-orange full-screen-table">
+    <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
+            Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+    -->
+        
+
+
+        <div class="toolbar">
+           <h3>Suppplier</h3>
+           <h4>TIN#</h4>
+        </div>
+        <div class="toolbar">
+            <button class="btn btn-default" (click)="onClickAddSupplier()">Input</button>
+        </div>        
+        <table id="fresh-table" class="table">
+            <thead>
+                <th data-field="id">ID</th>
+            	<th data-field="ammount" data-sortable="true">Vatable Amount</th>
+            	<th data-field="tax">Input Tax</th>
+              <th data-field="due">Amount Due</th>
+            	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+            </thead>
+            <tbody >
+                <tr>
+                	<td>1</td>
+                	<td></td>
+                	<td></td>
+                  <td></td>
+                	<td>
+                    <button class="btn btn-sm btn-primary"(click)="onClickDelete( post.idx, post.Supplier )">Delete</button>
+                    
+                  </td>
+                </tr>
+            </tbody>
+        </table>

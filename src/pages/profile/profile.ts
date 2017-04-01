@@ -19,9 +19,10 @@ export class ProfilePage implements OnInit{
   loadData( ) {
     this.user.data().subscribe( (res) =>{
       this.form.id = res.data.user.id;
-      this.form.email = res.data.user.email;
       this.form.nickname = res.data.user.nickname;
       this.form.name = res.data.user.name;
+      if( res.data.user.email ) this.form.email = res.data.user.email;
+      else delete this.form.email;
     }, err => console.error( err ));
   }
 
