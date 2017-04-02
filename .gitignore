@@ -7,7 +7,7 @@
 
 # dependencies
 /node_modules
-/bir-backend
+bir-backend
 # IDEs and editors
 /.idea
 .project

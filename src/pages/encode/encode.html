@@ -1,6 +1,4 @@
 <header-component></header-component>
-<h1>Encode Page</h1>
-
 <!--
 
 modal
@@ -38,20 +36,23 @@ modal
   <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
           Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
   -->
-<div class="wrapper">
-    <div class="fresh-table full-color-orange full-screen-table">
+<div class="wrapper d-flex justify-content-center">
+    <div class="fresh-table full-table-style full-screen-table">
     <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
             Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
     -->
         
         <div class="toolbar">
-            <button class="btn btn-default" (click)="onClickAddSupplier()">Add Supplier</button>
-            <button class="btn btn-default" (click)="onClickDownload()">Download Excel File</button>
-            <button class="btn btn-default" >Import Excel File</button>
+            <button class="btn btn-secondary" (click)="onClickAddSupplier()">Add Supplier</button>
+            <button class="btn btn-secondary" (click)="onClickDownload()">Download Excel File</button>
+            <button class="btn btn-secondary" (click)="onClickImport(userfile)">Import Excel File</button>
+            <div style="height:0px;overflow:hidden">
+              <input type="file" #userfile name="fileInput" (change)="onChangeFile(userfile)"/>
+            </div>
         </div>
         
-        <table id="fresh-table" class="table">
-            <thead>
+        <table id="fresh-table" class="table table-bordered table-hover table-responsive">
+            <thead class="thead-inverse">
                 <th data-field="id">ID</th>
             	<th data-field="name" data-sortable="true">Name of Supplier</th>
             	<th data-field="tin" data-sortable="true">TIN</th>
@@ -60,11 +61,11 @@ modal
               <th data-field="due">Total Amount Due</th>
             	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
             </thead>
-            <tbody *ngFor="let post of table">
+            <tbody *ngFor="let post of pagination">
                 <tr>
-                	<td>{{ post.idx }}</td>
-                	<td><table-component [item]="post.Supplier"></table-component></td>
-                	<td><table-component [item]="post.TIN"></table-component></td>
+                	<td scope="row">{{ post.idx }}</td>
+                	<td><table-component [idx]="post.idx" [type]="'supplier'" [item]="post.Supplier"></table-component></td>
+                	<td><table-component [idx]="post.idx" [type]="'tin'" [item]="post.TIN"></table-component></td>
                 	<td></td>
                 	<td></td>
                   <td></td>
@@ -76,9 +77,19 @@ modal
                 </tr>
             </tbody>
         </table>
-
-
+  <page-navigation
+    [no_of_total_items]=" totalRecord "
+    [no_of_items_in_one_page] = " limitPerPage "
+    [no_of_pages_in_navigator] = " numberPerNav "
+    [no_of_current_page] = " currentPage "
+    [show_prev_next] = " true "
+    (pageClick)="onPageClick($event)"
+  >
+  </page-navigation>
+  
 <!--<ng-table [config]="config.sorting"-->
           <!--(tableChanged)="onChangeTable(config)"-->
           <!--[rows]="rows" [columns]="columns">-->
 <!--</ng-table>-->
+    </div>
+</div>

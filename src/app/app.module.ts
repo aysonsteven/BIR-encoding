@@ -20,6 +20,7 @@ import { TableComponent } from '../components/table/table';
 
 ///added module
 import { AngularBackend } from './../bir-backend/angular-backend';
+import { AngularBackendComponentModule } from './../bir-backend/modules/angular-backend-components.module';
 const appRoutes: Routes = [
   { path: 'help', component: HelpPage },
   { path: '', component: HomePage },
@@ -46,8 +47,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot( appRoutes ),
     AngularBackend,
     Ng2TableModule,
-    PaginationModule,
-    ModalModule.forRoot()
+    PaginationModule.forRoot(),
+    ModalModule.forRoot(),
+    AngularBackendComponentModule
   ],
   bootstrap: [ AppComponent ],
   providers: [ PaginationConfig ]

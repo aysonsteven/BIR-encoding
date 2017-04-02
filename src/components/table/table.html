@@ -1,2 +1,2 @@
 <span *ngIf="!active" (click)="onClickEnableEdit()">{{ item }}</span>
-<input type="text" class="form-control form-control-sm" *ngIf="active">
+<input type="text" class="form-control form-control-sm" *ngIf="active" [(ngModel)]="item" (keydown)="onEnterEdit($event)">
