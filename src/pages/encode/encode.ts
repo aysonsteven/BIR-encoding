@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap';
 @Component({
   selector: 'encode-page',
-  templateUrl: 'encode.html'
+  templateUrl: 'encode.html',
+  styleUrls:['./encode.scss']
 })
 export class EncodePage implements OnInit {
   @ViewChild('inputSupplier') public inputModal:ModalDirective;

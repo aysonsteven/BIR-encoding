@@ -3,7 +3,8 @@ import { USER_LOGIN, USER_LOGIN_RESPONSE,RESPONSE, User } from './../../bir-back
 import {map} from "rxjs/operator/map";
 @Component( {
   selector: 'header-component',
-  templateUrl: 'header.html'
+  templateUrl: 'header.html',
+  styleUrls:['./header.scss']
 })
 export class HeaderComponent implements OnInit{
 
