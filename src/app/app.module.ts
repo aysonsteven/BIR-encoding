@@ -26,7 +26,7 @@ const appRoutes: Routes = [
   { path: '', component: HomePage },
   { path: 'encode', component: EncodePage },
   { path: 'profile', component: ProfilePage},
-  { path: 'inputs', component: InputPage }
+  { path: 'inputs/:idx', component: InputPage }
 ];
 
 @NgModule({

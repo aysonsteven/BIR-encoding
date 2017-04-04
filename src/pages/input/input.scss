@@ -1,5 +1,4 @@
-input-page {
-    /**
+/**
  * @author zhixin wen <wenzhixin2010@gmail.com>
  * version: 1.8.1
  * https://github.com/wenzhixin/bootstrap-table/
@@ -398,6 +397,10 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small
   color: #9A9A9A;
   font-weight: 300;
   line-height: 1.5;
+}
+
+table-component:hover {
+  font-weight: bolder;
 }
 
 h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
@@ -961,6 +964,10 @@ table-component{
   border-right: 0 none;
 }
 
+.btn {
+  cursor: pointer;
+}
+
 .input-group .form-control:last-child,
 .input-group-addon:last-child,
 .input-group-btn:last-child > .dropdown-toggle,
@@ -1086,19 +1093,39 @@ table-component{
   transform-origin: 29px -50px;
 }
 
-.fresh-table {
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  color: #666666;
-}
+// .fresh-table {
+//   background-color: #FFFFFF;
+//   border-radius: 10px;
+//   color: #666666;
+// }
 .fresh-table .btn {
-  border-radius: 30px !important;
+  border-radius: 0px !important;
 }
 .fresh-table a {
   color: #AAAAAA;
 }
 .fresh-table a:hover, .fresh-table a:focus {
   color: #898989;
+}
+.modal-header, .btn {
+  max-height: 3em;
+  border-radius: 0px;
+}
+
+
+.submit-btn {
+  background-color: lightgreen;
+  margin-top: 0.8em;
+}
+.tin-form {
+  margin-top: 0.5em;
+}
+input {
+  border-radius: 0px;
+}
+
+.modal-content {
+  border-radius: 0px;
 }
 .fresh-table input[type="radio"],
 .fresh-table input[type="checkbox"] {
@@ -1405,10 +1432,12 @@ table-component{
 .fresh-table[class*="full-color-"] .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: rgba(255, 255, 255, 0.15);
 }
-.fresh-table.full-color-orange {
-  background: lightslategray;
- 
+.fresh-table.full-table-style {
+  background: white;
+  color: black;
+  padding-left: 1em;
 }
 
 
-}
+
+

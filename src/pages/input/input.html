@@ -1,34 +1,55 @@
-<div class="wrapper">
-    <div class="fresh-table full-color-orange full-screen-table">
-    <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
-            Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
-    -->
-        
+<button class="btn btn-default btn-sm btn-primary" (click)="onClickCloseWindow()">close</button>
 
+<div class="wrapper d-flex justify-content-center">
+    <div class="fresh-table full-table-style full-screen-table">
+
+
+<!--
+modal
+-->
+<div bsModal #inputReceipt="bs-modal" class="modal fade" tabindex="-1" role="modal-dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Input Suppliers</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text"  placeholder="Total Amount">
+        <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+  modal
+-->
 
         <div class="toolbar">
-           <h3>Suppplier</h3>
-           <h4>TIN#</h4>
+           <h3>Suppplier: {{ data.Supplier }}</h3>
+           <h4>TIN#: {{ data.TIN }}</h4>
         </div>
         <div class="toolbar">
-            <button class="btn btn-default" (click)="onClickAddSupplier()">Input</button>
+            <button class="btn btn-default" (click)="onClickAddReceipt()">Input</button>
         </div>        
-        <table id="fresh-table" class="table">
-            <thead>
+        <table id="fresh-table" class="table table-bordered table-hover table-responsive">
+            <thead class="thead-inverse">
                 <th data-field="id">ID</th>
             	<th data-field="ammount" data-sortable="true">Vatable Amount</th>
             	<th data-field="tax">Input Tax</th>
               <th data-field="due">Amount Due</th>
             	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
             </thead>
-            <tbody >
+            <tbody *ngFor="let input of inputs" >
                 <tr>
-                	<td>1</td>
+                	<td>{{ input.idx }}</td>
                 	<td></td>
                 	<td></td>
                   <td></td>
                 	<td>
-                    <button class="btn btn-sm btn-primary"(click)="onClickDelete( post.idx, post.Supplier )">Delete</button>
+                    <button class="btn btn-sm btn-primary" (click)="onClickDelete(input.idx)">Delete</button>
                     
                   </td>
                 </tr>

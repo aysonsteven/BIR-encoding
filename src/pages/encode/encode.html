@@ -1,37 +1,28 @@
 <header-component></header-component>
+
 <!--
-
 modal
-
-
 -->
-
-
 <div bsModal #inputSupplier="bs-modal" class="modal fade" tabindex="-1" role="modal-dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">Input Suppliers</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
-          <span aria-hidden="true">&times;</span>
+          <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" [(ngModel)]="form.Supplier" class="form-control form-control-sm">
-        <input type="text" [(ngModel)]="form.TIN" class="form-control form-control-sm">
-        <button class="btn btn-default btn-sm" (click)="onClickPost()">Submit</button>
+        <input type="text" [(ngModel)]="form.Supplier" class="form-control" placeholder="Supplier">
+        <input type="text" [(ngModel)]="form.TIN" class="form-control tin-form" placeholder="TIN #">
+        <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
     </div>
   </div>
 </div>
-
 <!--
-
-
-
   modal
 -->
-
 
   <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
           Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
@@ -53,7 +44,7 @@ modal
         
         <table id="fresh-table" class="table table-bordered table-hover table-responsive">
             <thead class="thead-inverse">
-                <th data-field="id">ID</th>
+              <th data-field="id">ID</th>
             	<th data-field="name" data-sortable="true">Name of Supplier</th>
             	<th data-field="tin" data-sortable="true">TIN</th>
             	<th data-field="ammount" data-sortable="true">Total ammount</th>
@@ -70,7 +61,7 @@ modal
                 	<td></td>
                   <td></td>
                 	<td>
-                    <button class="btn btn-sm btn-primary" (click)="onClickInput()">Input</button>
+                    <button class="btn btn-sm btn-primary" (click)="onClickInput(post.idx)">Input</button>
                     <button class="btn btn-sm btn-primary"(click)="onClickDelete( post.idx, post.Supplier )">Delete</button>
                     
                   </td>

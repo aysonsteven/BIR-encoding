@@ -1,13 +1,15 @@
 <header-component></header-component>
 <div class="container">
+    <h2 class="form-signin-heading">Update Profile</h2>
 
   <form class="form-signin">
-
-    <input  #userfile type="file" (change)="onChangeFileUpload( userfile )">
+    <button class="btn btn-secondary" (click)="onClickImport(userfile)">Upload Profile Picture</button>
+    <div style="height:0px;overflow:hidden">
+    <input type="file" #userfile name="fileInput" (change)="onChangeFile(userfile)"/>
+    </div>
 
     <img src="{{ src_photo }}">
 
-    <h2 class="form-signin-heading">Please sign up</h2>
     <input type="email" name="email" id="inputEmail" [(ngModel)]="form.email" class="form-control" placeholder="Email address" autofocus>
     <input type="text" name="nickname" id="inputNickname" [(ngModel)]="form.nickname" class="form-control" placeholder="Nickname" >
     <input type="text" name="name" id="inputName" [(ngModel)]="form.name" class="form-control" placeholder="name" >

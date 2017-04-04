@@ -164,8 +164,8 @@ export class EncodePage implements OnInit {
 
   }
 
-  onClickInput() {
-    window.open("inputs","", "width=550,height=600, status=no, menubar=no" );
+  onClickInput( idx ) {
+    window.open("inputs/"+ idx ,"", "width=550,height=600, status=no, menubar=no" );
   }
 
   onClickImport( userfile ) {

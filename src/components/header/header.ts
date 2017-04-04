@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit{
   form: USER_LOGIN = <USER_LOGIN>{};
   userData = {};
 
-  constructor(private user: User) {
+  constructor(public user: User) {
 
   }
 

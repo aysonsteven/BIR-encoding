@@ -1107,6 +1107,26 @@ table-component{
 .fresh-table a:hover, .fresh-table a:focus {
   color: #898989;
 }
+.modal-header, .btn {
+  max-height: 3em;
+  border-radius: 0px;
+}
+
+
+.submit-btn {
+  background-color: lightgreen;
+  margin-top: 0.8em;
+}
+.tin-form {
+  margin-top: 0.5em;
+}
+input {
+  border-radius: 0px;
+}
+
+.modal-content {
+  border-radius: 0px;
+}
 .fresh-table input[type="radio"],
 .fresh-table input[type="checkbox"] {
   margin: 4px 5px 0 0;

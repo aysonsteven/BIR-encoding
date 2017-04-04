@@ -10,11 +10,20 @@ import { Router } from '@angular/router';
 
 export class ProfilePage implements OnInit{
   form: USER_EDIT = {};
+  src_photo: any;
   constructor( private user: User, private router: Router) {}
 
   ngOnInit() {
     if( ! this.user.logged ) return this.router.navigate(['']);
     this.loadData();
+  }
+
+  onClickImport( val ) {
+    val.click();
+  }
+
+  onChangeFile(val) {
+
   }
 
   loadData( ) {
