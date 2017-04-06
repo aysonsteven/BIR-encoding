@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Angular2Csv } from 'angular2-csv';
 import { User, POST_CREATE, POST_CREATE_RESPONSE, PostData, POST_LIST, POST_LIST_RESPONSE, LIST, POST_DELETE,
-  POST_EDIT, POST_EDIT_RESPONSE, POST, File, FILE_UPLOAD, FILE_UPLOAD_RESPONSE
+  POST_EDIT, POST_EDIT_RESPONSE, POST, File, FILE_UPLOAD, FILE_UPLOAD_RESPONSE, USER
  } from './../../bir-backend/angular-backend';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap';
@@ -13,6 +13,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class EncodePage implements OnInit {
   @ViewChild('inputSupplier') public inputModal:ModalDirective;
+  userdata: USER = {};
   toDelete: string;
   form : POST_CREATE = {};
   data = [];
@@ -39,11 +40,7 @@ export class EncodePage implements OnInit {
 
   constructor( private user: User, private router: Router, private post: PostData, private file: File ) {
 
-            this.onChangedSearch();
 
-        this.searchChangeDebounce
-          .debounceTime(300) // wait 300ms after the last event before emitting last event
-          .subscribe(() => this.onChangedSearch());
   }
 
   public hideChildModal():void {
@@ -52,7 +49,18 @@ export class EncodePage implements OnInit {
 
   public ngOnInit():void {
     if( ! this.user.logged ) this.router.navigate(['']);
-    // this.onClickDownload(); 
+        this.onChangedSearch();
+        this.getUserData();
+        this.searchChangeDebounce
+          .debounceTime(300) // wait 300ms after the last event before emitting last event
+          .subscribe(() => this.onChangedSearch());
+  }
+
+  getUserData() {
+    this.user.data().subscribe( res =>{
+      this.userdata = res.data.user;
+      console.info( 'ENCODE CLASS userdata -->' , res.data.user.idx );
+    }, error => this.user.alert( error ) );
   }
 
   onClickEnableEdit() {
@@ -66,7 +74,7 @@ export class EncodePage implements OnInit {
   }
 
 
-  onChangedSearch() {
+  public onChangedSearch() {
     //console.log('onChangeSearch', this.searchForm);
 
     if (this.searchForm.Supplier) {
@@ -118,7 +126,7 @@ export class EncodePage implements OnInit {
     this.post.list(this.searchQuery).subscribe((res: POST_LIST_RESPONSE ) => {
       this.pagination = res.data.posts;
       this.totalRecord = parseInt(res.data.total);
-      console.log( 'data:: ' , this.pagination );
+      console.log( 'data --> ' , this.pagination );
     }, err => this.post.alert(err));
   }
 
@@ -133,7 +141,7 @@ export class EncodePage implements OnInit {
 
   onClickDownload(  ) {
     let req: LIST = {
-      select: 'idx, Supplier, TIN',
+      select: 'idx, Supplier, TIN, TotalAmountOfPurchase, TotalInputTax, TotalAmountDue',
       extra :{
         'post_config_id' : 'bir',
         // file: true,
@@ -149,27 +157,52 @@ export class EncodePage implements OnInit {
         showLabels: true
       }
       new Angular2Csv( res.data.posts, 'bir-report', options ); 
-        console.log( 'full load ' , this.table );
+        console.log( 'full load ' , res.data.posts );
       });
   }
 
-  onClickDelete( postidx, name ) {
-    if( ! confirm('Are you sure you want to delete ' + name ) ) return;
-    this.post.delete( parseInt(postidx) ).subscribe( ( res ) =>{
+  onClickDelete( post ) {
+    if( this.checkOwner( post.user_idx ) == false ) return console.error('not your post'); 
+    if( ! confirm('Are you sure you want to delete ' + post.Supplier ) ) return;
+    this.post.delete( parseInt(post.idx) ).subscribe( ( res ) =>{
       console.info(res );
-      this.pagination = this.pagination.filter( ( file) => file.idx != postidx);
+      this.pagination = this.pagination.filter( ( file) => file.idx != post.idx);
     }, err => this.post.alert( err ));
   }
   checklogin() {
 
   }
 
-  onClickInput( idx ) {
-    window.open("inputs/"+ idx ,"", "width=550,height=600, status=no, menubar=no" );
+  checkOwner( idx ) {
+    if(idx != this.userdata.idx) return false;
+    else return true;
+  }
+
+  onClickInput( post ) {
+    if( this.checkOwner( post.user_idx) == false ) return console.error('not your post'); 
+    // window.open("inputs/"+ post.idx ,"", "width=550,height=600, status=no, menubar=no" );
+    this.router.navigate(['inputs', post.idx])
   }
 
   onClickImport( userfile ) {
     userfile.click();
+  }
+
+
+
+  switchToAllItem() {
+    let req: LIST = {
+      select: 'idx, Supplier, TIN, AmountOfPurchase, InputTax, AmountDue',
+      extra :{
+        'post_config_id' : 'bir',
+        // file: true,
+        // meta: true
+      }
+    };
+    req.where = "parent_idx <> 0 AND deleted IS NULL"
+    this.post.list( req ).subscribe( ( res : POST_LIST_RESPONSE ) =>{
+      console.info('all items -----> ' , res );
+    });
   }
 
   onChangeFile( userfile ) {

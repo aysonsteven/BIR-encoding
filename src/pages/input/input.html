@@ -1,4 +1,4 @@
-<button class="btn btn-default btn-sm btn-primary" (click)="onClickCloseWindow()">close</button>
+
 
 <div class="wrapper d-flex justify-content-center">
     <div class="fresh-table full-table-style full-screen-table">
@@ -17,7 +17,7 @@ modal
         </button>
       </div>
       <div class="modal-body">
-        <input type="text"  placeholder="Total Amount">
+        <input type="text" [(ngModel)]="formInput.AmountDue" placeholder="Total Amount">
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
     </div>
@@ -33,6 +33,7 @@ modal
         </div>
         <div class="toolbar">
             <button class="btn btn-default" (click)="onClickAddReceipt()">Input</button>
+            <button class="btn btn-default btn-primary pull-right" (click)="onClickBack()">Back</button>
         </div>        
         <table id="fresh-table" class="table table-bordered table-hover table-responsive">
             <thead class="thead-inverse">
@@ -45,9 +46,9 @@ modal
             <tbody *ngFor="let input of inputs" >
                 <tr>
                 	<td>{{ input.idx }}</td>
-                	<td></td>
-                	<td></td>
-                  <td></td>
+                	<td>{{ input.AmountOfPurchase }}</td>
+                	<td>{{ input.InputTax }}</td>
+                  <td>{{ input.AmountDue }}</td>
                 	<td>
                     <button class="btn btn-sm btn-primary" (click)="onClickDelete(input.idx)">Delete</button>
                     

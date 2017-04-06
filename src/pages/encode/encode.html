@@ -36,6 +36,7 @@ modal
         <div class="toolbar">
             <button class="btn btn-secondary" (click)="onClickAddSupplier()">Add Supplier</button>
             <button class="btn btn-secondary" (click)="onClickDownload()">Download Excel File</button>
+            <button class="btn btn-secondary" (click)="switchToAllItem()">Switch</button>
             <button class="btn btn-secondary" (click)="onClickImport(userfile)">Import Excel File</button>
             <div style="height:0px;overflow:hidden">
               <input type="file" #userfile name="fileInput" (change)="onChangeFile(userfile)"/>
@@ -57,12 +58,12 @@ modal
                 	<td scope="row">{{ post.idx }}</td>
                 	<td><table-component [idx]="post.idx" [type]="'supplier'" [item]="post.Supplier"></table-component></td>
                 	<td><table-component [idx]="post.idx" [type]="'tin'" [item]="post.TIN"></table-component></td>
-                	<td></td>
-                	<td></td>
-                  <td></td>
+                	<td> {{ post.TotalAmountOfPurchase }} </td>
+                	<td> {{ post.TotalInputTax }}</td>
+                  <td> {{ post.TotalAmountDue }}</td>
                 	<td>
-                    <button class="btn btn-sm btn-primary" (click)="onClickInput(post.idx)">Input</button>
-                    <button class="btn btn-sm btn-primary"(click)="onClickDelete( post.idx, post.Supplier )">Delete</button>
+                    <button class="btn btn-sm btn-primary" (click)="onClickInput(post)">Input</button>
+                    <button class="btn btn-sm btn-primary"(click)="onClickDelete( post )">Delete</button>
                     
                   </td>
                 </tr>

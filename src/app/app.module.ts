@@ -17,6 +17,7 @@ import { InputPage } from '../pages/input/input';
 
 import { HeaderComponent } from './../components/header/header';
 import { TableComponent } from '../components/table/table';
+import { CompleteViewComponent } from '../pages/completeview/completeview';
 
 ///added module
 import { AngularBackend } from './../bir-backend/angular-backend';
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     ProfilePage,
     InputPage,
-    TableComponent  
+    TableComponent,
+    CompleteViewComponent  
   ],
   imports: [
     BrowserModule,
