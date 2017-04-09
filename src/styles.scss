@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+$color_pallete1:#4b494f;
+$color_pallete2:#45c1ae;
+$color_pallete3:#f15f4c;
+$color_pallete4:#e5b742;
+$color_pallete5:#eeeeee;
+$minbreakpoint:575px;
+$breakpoint: 768px;
+$maxbreakpoint:992px;
+$large_breakpoint:1240px;
+$gutter: 8px;
+//Bootstrap Breakpoint
+$sm_breakpoint:576px;
+$md_breakpoint:768px;
+$lg_breakpoint:992px;
+$xl_breakpoint:1200px;
+
+$header-height: 120px; // @attention - this value must match on header.ts
+$header-top-height: 36px;
+$header-bottom-height: $header-height - $header-top-height;
+
+

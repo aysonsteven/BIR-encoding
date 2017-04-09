@@ -1,5 +1,66 @@
 <header-component></header-component>
+<!--
 
+CALENDAR TEST START
+
+-->
+
+
+<div class="reservation justify-content-center">
+
+    <div class="reservation-container">
+        <div class="date-container">
+        <div class="prev-month" >   
+            <!--<span class="show-list" (click)="showPrevious=!showPrevious">
+                <i *ngIf="showPrevious" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                <i *ngIf="!showPrevious" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </span>-->
+            <div (click)="onClickPrev()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;</span><span >{{ prevMonths[1]?.m}} {{ prevMonths[1]?.Y}}</span></div>
+            
+
+        </div>
+ 
+        <div class="next-month">
+            <!--<span class="show-list" (click)="showNext=!showNext">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i *ngIf="showNext" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                <i *ngIf="!showNext" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+            </span>-->
+            <div  (click)="onClickNext()" ><span >{{ nextMonths[0]?.m}} {{ nextMonths[0]?.Y}}</span> <span> &nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></span></div>   
+
+        </div>
+       
+        <div class="this-month" on-mouseleave="showYear=false">
+            <span class="show-list" >
+                <!--<i *ngIf="showYear" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                <i *ngIf="!showYear" class="fa fa-arrow-circle-down" aria-hidden="true"></i>-->
+            </span>
+            <div on-mouseover="showYear=true"><span>{{ prevMonths[0]?.m}} {{ prevMonths[0]?.Y}}</span></div>   
+          
+          <div class="this-months" *ngIf="showYear">   
+                <ul>
+                    <li class="this-year" *ngFor="let year of listOfYears" (click)="selectNewDate({m:year.m,Y:year.Y})"> {{ year.m }} {{ year.Y }}</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+       
+        
+       
+        <div *ngIf="!calendarLoad" class="calendar-loader">
+          <div class="loader"><i class="fa fa-spinner fa-pulse"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--
+
+CALENDAR TEST END
+
+-->
 <!--
 modal
 -->
@@ -32,7 +93,17 @@ modal
     <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
             Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
     -->
-        
+
+      <div class="toolbar search_field">
+        <input type="text" [(ngModel)]="searchForm.Supplier" placeholder="Supplier                         &#xF002;" class="search" (keydown)="onEnterSearch()">
+        <i *ngIf="searchForm.Supplier" class="fa fa-window-close" aria-hidden="true" (click)="onClickClearSearchSupplier()"></i>
+      </div>
+      <div class="toolbar search_field">
+        <input type="text" [(ngModel)]="searchForm.TIN" placeholder="TIN Number                  &#xF002;" class="search" (keydown)="onEnterSearch()">
+        <i *ngIf="searchForm.TIN" class="fa fa-window-close" aria-hidden="true" (click)="onClickClearSearchTIN()"></i>
+      </div>
+
+
         <div class="toolbar">
             <button class="btn btn-secondary" (click)="onClickAddSupplier()">Add Supplier</button>
             <button class="btn btn-secondary" (click)="onClickDownload()">Download Excel File</button>

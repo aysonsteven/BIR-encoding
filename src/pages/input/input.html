@@ -18,6 +18,7 @@ modal
       </div>
       <div class="modal-body">
         <input type="text" [(ngModel)]="formInput.AmountDue" placeholder="Total Amount">
+        <input type="text" [(ngModel)]="formInput.InvoiceNo" placeholder="Invoice Number">
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
     </div>
@@ -37,7 +38,8 @@ modal
         </div>        
         <table id="fresh-table" class="table table-bordered table-hover table-responsive">
             <thead class="thead-inverse">
-                <th data-field="id">ID</th>
+              <th data-field="id">ID</th>
+              <th data-field="invoice">Invoice No.</th>
             	<th data-field="ammount" data-sortable="true">Vatable Amount</th>
             	<th data-field="tax">Input Tax</th>
               <th data-field="due">Amount Due</th>
@@ -46,6 +48,7 @@ modal
             <tbody *ngFor="let input of inputs" >
                 <tr>
                 	<td>{{ input.idx }}</td>
+                  <td>{{ input.InvoiceNo }}</td>
                 	<td>{{ input.AmountOfPurchase }}</td>
                 	<td>{{ input.InputTax }}</td>
                   <td>{{ input.AmountDue }}</td>

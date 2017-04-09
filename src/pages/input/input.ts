@@ -52,9 +52,11 @@ export class InputPage implements OnInit {
   }
 
     onClickPost() {
+        let amountofpurchase: number = this.formInput.AmountDue /1.12;
+        let inputtax: number = amountofpurchase * 0.12
         this.formInput.post_config_id = 'bir';
-        this.formInput.AmountOfPurchase = this.formInput.AmountDue /1.12;
-        this.formInput.InputTax = this.formInput.AmountOfPurchase * 0.12;
+        this.formInput.AmountOfPurchase = Math.round( amountofpurchase * 100 + Number.EPSILON) / 100;
+        this.formInput.InputTax = Math.round( inputtax * 100 + Number.EPSILON) / 100;
         this.post.create( this.formInput ).subscribe( ( res  ) =>{
             console.log( 'res input --> ' , res.data );
             this.inputs.push( res.data );
