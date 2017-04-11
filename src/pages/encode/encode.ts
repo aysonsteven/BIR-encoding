@@ -21,10 +21,10 @@ interface NextMonths extends NewDate {
 }
 
 interface tin_number {
-  tin1: number;
-  tin2: number;
-  tin3: number;
-  tin4: number;
+  tin1: string;
+  tin2: string;
+  tin3: string;
+  tin4: string;
 }
 
 @Component({
@@ -275,6 +275,23 @@ export class EncodePage implements OnInit {
     this.searchQuery.order= 'idx DESC';
     this.currentPage = 1;
     this.loadSearchedData();
+  }
+
+
+  onChangeInput(val, event) {
+    if(document.activeElement.id == 'tin1' && val.value.length == 3) return document.getElementById("tin2").focus();
+    if(document.activeElement.id == 'tin2' && val.value.length == 3) return document.getElementById("tin3").focus();
+    if(document.activeElement.id == 'tin3' && val.value.length == 3) return document.getElementById("tin4").focus();
+    if( document.activeElement.id == 'tin2' && val.value.length == 0 ){
+      if(  event.keyCode == 8 ) document.getElementById("tin1").focus();
+    }
+    if( document.activeElement.id == 'tin3' && val.value.length == 0 ){
+      if(  event.keyCode == 8 ) document.getElementById("tin2").focus();
+    }
+
+    if( document.activeElement.id == 'tin4' && val.value.length == 0 ){
+      if(  event.keyCode == 8 ) document.getElementById("tin3").focus();
+    }
   }
 
 

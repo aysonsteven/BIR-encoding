@@ -7,34 +7,24 @@ CALENDAR TEST START
 
 
 <div class="reservation justify-content-center">
-
     <div class="reservation-container">
         <div class="date-container">
         <div class="prev-month" >   
-            <!--<span class="show-list" (click)="showPrevious=!showPrevious">
-                <i *ngIf="showPrevious" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                <i *ngIf="!showPrevious" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            </span>-->
+
             <div (click)="onClickPrev()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></div>
             
 
         </div>
  
         <div class="next-month">
-            <!--<span class="show-list" (click)="showNext=!showNext">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                <i *ngIf="showNext" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                <i *ngIf="!showNext" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
-            </span>-->
+
             <div  (click)="onClickNext()" ><span> <i class="fa fa-arrow-right" aria-hidden="true"></i></span></div>   
 
         </div>
        
         <div class="this-month" on-mouseleave="showYear=false">
             <span class="show-list" >
-                <!--<i *ngIf="showYear" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                <i *ngIf="!showYear" class="fa fa-arrow-circle-down" aria-hidden="true"></i>-->
+
             </span>
             <div on-mouseover="showYear=true"><span>{{ prevMonths[0]?.m}} {{ prevMonths[0]?.Y}}</span></div>   
           
@@ -76,8 +66,9 @@ modal
       <div class="modal-body">
         <input type="text" [(ngModel)]="form.Supplier" class="form-control" placeholder="Supplier">
         <!--<input type="text" [(ngModel)]="form.TIN" class="form-control tin-form" placeholder="TIN #">-->
-        <div class="tin_container">
-          <input type="text" [(ngModel)]="tin.tin1"> - <input type="text" [(ngModel)]="tin.tin2"> - <input type="text" [(ngModel)]="tin.tin3"> - <input type="text" [(ngModel)]="tin.tin4">           
+        <div class="form-inline tin_container">
+          <br/>
+          <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin1" id="tin1" #tin1 (keyup)="onChangeInput(tin1, $event)" maxlength="3"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin2" id="tin2" #tin2 maxlength="3" (keyup)="onChangeInput(tin2, $event)"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin3" id="tin3" #tin3 (keyup)="onChangeInput(tin3, $event)" maxlength="3"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin4" maxlength="4" id="tin4" #tin4 (keyup)="onChangeInput(tin4, $event)">           
         </div>
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
@@ -143,7 +134,7 @@ modal
                 </tr>
             </tbody>
         </table>
-  <page-navigation
+  <page-navigation class="d-flex justify-content-center"
     [no_of_total_items]=" totalRecord "
     [no_of_items_in_one_page] = " limitPerPage "
     [no_of_pages_in_navigator] = " numberPerNav "

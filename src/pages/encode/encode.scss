@@ -1127,6 +1127,10 @@ input {
 .modal-content {
   border-radius: 0px;
 }
+.tin_container > input {
+  margin-top: 0.8em;
+  width: 4.4em;
+}
 .fresh-table input[type="radio"],
 .fresh-table input[type="checkbox"] {
   margin: 4px 5px 0 0;
@@ -1647,11 +1651,12 @@ i {
    
     .reservation {
         margin:5em auto auto;
+        margin-top: 1.3em;
         width: 100%;
         max-width: $lg_breakpoint;
         .reservation-container {
             position: relative;
-            margin-bottom:5em;
+            margin-bottom:2em;
             .date-container {
                 height: 3em;
                 width:100%;
@@ -1693,7 +1698,7 @@ i {
                 top:2.15em;
                 left: .3em;
                 z-index: 1;
-                @include nav_setting();
+
                 ul {
                     padding: 0;
                     list-style: none;
@@ -1713,7 +1718,7 @@ i {
                 span:hover {
                     font-weight: bold;
                 }
-                @include show_list_settings();
+
             }
             .next-months {
                 position: absolute;
@@ -1740,161 +1745,10 @@ i {
                 span:hover {
                     font-weight: bold;
                 }
-                @include show_list_settings();
-            }
-            table {
-                margin: 1em 0;
-                font-size: .8em;
-                th {
-                    border: .3em solid #fff;
-                    text-align: center;
-                }
-                td {
-                    border: .3em solid #fff;
-                    
-                    position: relative;
-                }
-                .my-date {
-                    @media(min-width: $sm_breakpoint ) {
-                        position: absolute;
-                        left:1em;
-                        font-weight:bold;
-                    }
-                }
-                .teacher-nick {
-                    text-align: center;
-                }
-                 .teacher-icon{
-                    // text-align: center;
-                    border-radius: 50%;
-                    width: 4rem;
-                    height: 4rem;
-                    overflow: hidden;
-                    margin:0 auto;
-                    img {
-                        width: 4rem;
-                        height: auto;
-                        // border-radius:50%;
-                    }
-                }
-                .calendar-day-head {
-                    background-color: #7d7d7d;
-                    color: #fff;
-                    max-width: 3em;
-                    &:first-child {
-                        background-color: #eaeaea;
-                        color: #000;
-                        max-width: 3em;
-                        @media(min-width:$md_breakpoint) {
-                            width: auto;
-                            max-width: 1em;
-                        }
-                    }
-                    &:last-child {
-                        background-color: #eaeaea;
-                        color: #000;
-                        max-width: 3em;
-                        @media(min-width:$md_breakpoint) {
-                            width: auto;
-                            max-width: 1em;
-                        }
-                    }
-                    @media(min-width:$md_breakpoint) {
-                        width: auto;
-                    }
-                }
-                .calendar-day {
-                    background-color: #f1f1f1;
-                    max-width: 3em;
-                    .class-info {
-                        position: absolute;
-                        padding: 1em;
-                        top:-10em;
-                        left: -13em;
-                        width: 15em;
-                        z-index: 1;
-                        background-color:grey;
-                        // background-color:#e63349;
-                        color:#fff;
-                        font-size: 1em;
-                        div {
-                            margin-bottom: 1em;
-                        }
-                    }
-                    &:first-child {
-                        background-color: #eaeaea;
-                        color: #fd0e35;
-                        max-width: 3em;
-                        @media(min-width:$md_breakpoint) {
-                            width: auto;
-                            max-width: 1em;
-                        }
-                    }
-                    &:last-child {
-                        background-color: #eaeaea;
-                        color: #fd0e35;
-                        max-width: 3em;
-                        @media(min-width:$md_breakpoint) {
-                            width: auto;
-                            max-width: 1em;
-                        }
-                    }
-                    @media(min-width:$sm_breakpoint) {
-                        height: 60px;
-                    }
-                    @media(min-width:$md_breakpoint) {
-                        width: auto;
-                        height: 85px;
-                    }
-                    @media(min-width:$lg_breakpoint) {
-                        height: 100px;
-                    }
-                    
-                    
-                }
-                @media(min-width:$md_breakpoint) {
-                    font-size: 1em;
-                }
+                
             }
         }
-        .calendar-loader {
-            // text-align: center;
-            position: absolute;
-            top:40%;
-            left:43%;
-            // text-align: center;
-            // margin:0 auto;
-            font-size: 8em; 
-            color:#7d7d7d;
-            .loader {
-                text-align: center;
-                font-size: 1em;
-            }
-        }
-        .reminder-image {
-            position:absolute;
-            margin:0 auto;
-            bottom:0;
-            width: 100%;
-            overflow: auto;
-            img {
-                display: block;
-                margin: 0 auto .3em;
-                width: 70%;
-            }
-            .reminder-text {
-                display: block;
-                position: absolute;
-                text-align: center;
-                top:20%;
-                left: 41%;
-                width: 40%;
-                font-size: 1em;
-                color: white;
-                @media(min-width:$sm_breakpoint) {
-                    font-size: 2em;
-                }
-            }
-        }
+
+
     }
 }
