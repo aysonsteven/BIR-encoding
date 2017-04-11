@@ -12,6 +12,8 @@ export class InputPage implements OnInit {
     data : POST = {};
     inputs = <Array<POST>> [];
     idx: number;
+    month: number;
+    year: number;
     formInput: POST_CREATE = {};
     totalAmountDue:number = 0;
     totalInputTax:number = 0;
@@ -31,7 +33,9 @@ export class InputPage implements OnInit {
         if( ! this.user.logged ) return this.router.navigate(['']);
 
         this.route.params.forEach( ( params ) =>{
-            this.idx =parseInt( params['idx'] );
+            this.idx = parseInt( params['idx'] );
+            this.month = parseInt( params['month'] );
+            this.year = parseInt( params['year'] );
             if( ! this.idx ) return this.router.navigate(['']);
             this.formInput.parent_idx = this.idx.toString();
             this.post.data( this.idx  ).subscribe( res =>{
@@ -49,6 +53,7 @@ export class InputPage implements OnInit {
   public hideChildModal():void {
     this.inputReceipt.hide();
     this.formInput.AmountDue = null;
+    this.formInput.InvoiceNo = null;
   }
 
     onClickPost() {
@@ -57,6 +62,8 @@ export class InputPage implements OnInit {
         this.formInput.post_config_id = 'bir';
         this.formInput.AmountOfPurchase = Math.round( amountofpurchase * 100 + Number.EPSILON) / 100;
         this.formInput.InputTax = Math.round( inputtax * 100 + Number.EPSILON) / 100;
+        this.formInput.month = this.month;
+        this.formInput.year = this.year;
         this.post.create( this.formInput ).subscribe( ( res  ) =>{
             console.log( 'res input --> ' , res.data );
             this.inputs.push( res.data );
@@ -88,8 +95,12 @@ export class InputPage implements OnInit {
 
 
     onClickBack() {
-        // window.close();
-        this.router.navigate(['encode']);
+        let month: number, year: number;
+        this.route.params.forEach( params =>{
+            month = params['month'];
+            year = params['year'];
+        })
+        this.router.navigate(['encode' , month , year]);
     }
 
     onClickAddReceipt() {
@@ -106,6 +117,32 @@ export class InputPage implements OnInit {
             this.inputs = res.data.posts;
             console.info('inputsload --> ' , this.inputs );
             this.gettingTotal();
+            this.validatingInputs();
+        }, error => this.post.alert( error ) );
+    }
+
+
+    validatingInputs() {
+        this.inputs.forEach(element => {
+            let req: POST_EDIT = {};
+            if( element.Supplier != this.data.Supplier ) this.editSupplierElement( req, element );
+            if( element.TIN != this.data.TIN ) this.editTinElement( req, element );
+        });
+    }
+
+    editTinElement( req, element ) {
+        req.idx = element.idx;
+        req.TIN = this.data.TIN;
+        this.post.edit( req ).subscribe( ( res : POST_EDIT_RESPONSE ) => {
+            console.info('validated inputs', res );
+        }, error => this.post.alert( error) );
+    }
+
+    editSupplierElement( req, element ) {
+        req.idx = element.idx;
+        req.Supplier = this.data.Supplier;
+        this.post.edit( req ).subscribe( ( res: POST_EDIT_RESPONSE ) =>{
+            console.info('validated inputs', res );
         }, error => this.post.alert( error ) );
     }
     gettingTotal() {

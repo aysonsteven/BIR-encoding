@@ -19,15 +19,20 @@ import { HeaderComponent } from './../components/header/header';
 import { TableComponent } from '../components/table/table';
 import { CompleteViewComponent } from '../pages/completeview/completeview';
 
+import { HeadingComponent } from '../components/heading/heading';
+import { JumbotronHeaderComponent } from '../components/jumbotron-header/jumbotron-header';
+import { HelpUserComponent } from '../components/help-model/user/user';
+import { FooterComponent } from '../components/footer/footer';
+
 ///added module
 import { AngularBackend } from './../bir-backend/angular-backend';
 import { AngularBackendComponentModule } from './../bir-backend/modules/angular-backend-components.module';
 const appRoutes: Routes = [
-  { path: 'help', component: HelpPage },
+  { path: 'help/:model', component: HelpPage },
   { path: '', component: HomePage },
-  { path: 'encode', component: EncodePage },
+  { path: 'encode/:month/:year', component: EncodePage },
   { path: 'profile', component: ProfilePage},
-  { path: 'inputs/:idx', component: InputPage }
+  { path: 'inputs/:idx/:month/:year', component: InputPage }
 ];
 
 @NgModule({
@@ -40,7 +45,11 @@ const appRoutes: Routes = [
     ProfilePage,
     InputPage,
     TableComponent,
-    CompleteViewComponent  
+    CompleteViewComponent,
+    HeadingComponent,
+    JumbotronHeaderComponent  ,
+    HelpUserComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

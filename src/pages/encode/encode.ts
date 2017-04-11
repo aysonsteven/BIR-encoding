@@ -3,66 +3,30 @@ import { Angular2Csv } from 'angular2-csv';
 import { User, POST_CREATE, POST_CREATE_RESPONSE, PostData, POST_LIST, POST_LIST_RESPONSE, LIST, POST_DELETE,
   POST_EDIT, POST_EDIT_RESPONSE, POST, File, FILE_UPLOAD, FILE_UPLOAD_RESPONSE, USER
  } from './../../bir-backend/angular-backend';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap';
 import { Subject } from 'rxjs/Subject';
 
-export interface NewDate {
+interface NewDate {
     m:string;
     Y:string;
 }
-export interface ListOfYears extends NewDate {
+interface ListOfYears extends NewDate {
 }
 
-export interface PrevMonths extends NewDate {
+interface PrevMonths extends NewDate {
 }
 
-export interface NextMonths extends NewDate {
+interface NextMonths extends NewDate {
 }
-export type BOOKS = Array<BOOK>;
-export interface BOOK {
-    "idx": string,
-    "regstamp":string,
-    "idx_schedule_table": string,
-    "idx_teacher":string,
-    "idx_student":string,
-    "book":string,
-    "point":string,
-    "date":string,
-    "class_begin":string,
-    "class_end":string,
-    "absent_student":string,
-    "absent_teacher":string,
-    "rate_level":string,
-    "rate_grammar":string,
-    "rate_vocabulary":string,
-    "rate_expression":string,
-    "rate_pronounciation":string,
-    "rate_speed":string,
-    "rate_attitue":string,
-    "rate_comment":string,
-    "rate_stamp":string,
-    "refund_request_stamp":string,
-    "refund_request_reason":string,
-    "refund_request_done_stamp":string,
-    "classid":string,
-    "domain":string,
-    "ready":string,
-    "check":string,
-    "status_payment":string,
-    "teacher":{
-        "idx":string,
-        "mb_name":string,
-        "mb_nick":string
-    },
-    "ap":string,
-    "mins":string,
-    "icon":string,
-    "kdate":string,
-    "kday":string,
-    "ktime":string
+
+interface tin_number {
+  tin1: number;
+  tin2: number;
+  tin3: number;
+  tin4: number;
 }
-export type WEEKS = Array<BOOKS>;
+
 @Component({
   selector: 'encode-page',
   templateUrl: 'encode.html',
@@ -75,13 +39,12 @@ export class EncodePage implements OnInit {
   listOfYears:Array<ListOfYears> = [];
   showYear: boolean = false;
   date:Date = new Date();
-  year:number = this.date.getFullYear();
-  month:number =  (this.date.getMonth() + 1);
+  year:number;
+  month:number;
   prevMonths:Array<PrevMonths> = [];
   nextMonths:Array<NextMonths> = [];
   maxDay:number = 42;
-  books: BOOKS = [];
-  weeks: WEEKS = [];
+
   userdata: USER = {};
   toDelete: string;
   form : POST_CREATE = {};
@@ -89,6 +52,8 @@ export class EncodePage implements OnInit {
   table = [];
   active: boolean = false;
   editForm: POST_EDIT = {};
+
+  tin : tin_number = <tin_number> {};
 
 
 //pagination vars
@@ -107,7 +72,7 @@ export class EncodePage implements OnInit {
   searchChangeDebounce = new Subject();
 //pagination vars
 
-  constructor( private user: User, private router: Router, private post: PostData, private file: File ) {
+  constructor( private user: User, private router: Router, private post: PostData, private file: File, private activeroute: ActivatedRoute ) {
 
         this.searchChangeDebounce
           .debounceTime(300) // wait 300ms after the last event before emitting last event
@@ -138,7 +103,8 @@ export class EncodePage implements OnInit {
       if( this.month > 12) {
         this.year ++;
         this.month = 1;
-    }
+      }
+      this.router.navigate(['encode', this.month, this.year]);
       console.info('month --> ', this.month );
       console.info( 'year --> ' ,  this.year );
       this.searchForm = <POST>{}
@@ -150,7 +116,8 @@ export class EncodePage implements OnInit {
       if( this.month < 1) {
           this.year --;
           this.month = 12;
-    }
+      }
+      this.router.navigate(['encode', this.month, this.year]);
       console.info('month --> ', this.month );
       console.info( 'year --> ' ,  this.year );
       this.searchForm = <POST>{}
@@ -184,19 +151,29 @@ export class EncodePage implements OnInit {
 
   selectNewDate( data: NewDate ) {
       this.year = parseInt(data.Y);
-      this.month =new Date(Date.parse(`${data.m} +1, ${data.Y}`)).getMonth()+1;
-      // let m = new Date(this.month );
       console.log( 'selectnewdate ----> ', );
       this.searchChangeDebounce.next();
+      this.router.navigate(['/encode', this.month, this.year])
       this.getNewCalendar();
   }
 
   public hideChildModal():void {
     this.inputModal.hide();
+    this.form.TIN       =
+    this.tin.tin1       = 
+    this.tin.tin2       = 
+    this.tin.tin3       = 
+    this.tin.tin4       =
+    this.form.Supplier  = null;
   }
 
   public ngOnInit():void {
     if( ! this.user.logged ) this.router.navigate(['']);
+      this.activeroute.params.forEach( params =>{
+       this.month = params['month'];
+       this.year = params['year'];
+      })
+
         this.onChangedSearch();
         this.getUserData();
         this.listCalendar(this.month, this.year);
@@ -207,13 +184,7 @@ export class EncodePage implements OnInit {
         return n < 10 ? '0' + n : n.toString();
     }
 
-        chunk( arr:BOOKS ) : WEEKS {
-        let temp:WEEKS = [];
-        for( let i = 0; i < arr.length; i = i + 7 ) {
-            temp.push( this.pres( arr.slice( i, i + 7 ) ) );
-        }
-        return temp;
-    }
+
        pres( arr: any ) {
         return arr.map( e => this.pre(e) );
     }
@@ -223,20 +194,14 @@ export class EncodePage implements OnInit {
     }
 
     listCalendar( month, year ) {
-        this.books = [];
-        let book;
+    
         let empty_day = new Date(year + "-" + month + "-01").getDay()               // first date(day) of the month. 0~6
         let days_in_month = new Date(year, month, 0).getDate();                     // last date(day) of the month. 28, 29, 30.
-        for (let i = 0; i < empty_day; i++) { this.books.unshift( null ); }      // Fill all the empty days first
+     // Fill all the empty days first
         for (let i = 1; i <= days_in_month; i++) {                                  //Fill the days of month
             let date = this.year.toString() +  this.add0( this.month ) + this.add0( i );
-            if(this.data) book = this.data.find( book => book['date'] == date );
-            if ( book ) book['myDate'] = i;
-            else book = { myDate: i };
-            this.books.push( book );
         }
-        while( this.books.length < this.maxDay ) { this.books.push( null ); } // fill the remaining days
-        this.weeks = this.chunk(this.books );                             //Chunk Date
+                                //Chunk Date
     }
 
   getUserData() {
@@ -285,12 +250,6 @@ export class EncodePage implements OnInit {
     if (this.searchForm.TIN) cond += "TIN LIKE ? ";
     if (this.searchForm.TIN) bind += `%${this.searchForm.TIN}%`;
 
-
-
-    // if (this.searchForm.Supplier) cond += cond ? "AND Supplier LIKE ?  " : "Supplier LIKE ?  ";
-    // if (this.searchForm.Supplier) bind += bind ? `,%${this.searchForm.Supplier}%,%${this.searchForm.Supplier}%` : `%${this.searchForm.Supplier}%,%${this.searchForm.name}%`;
-
-
     if( this.searchForm.Supplier ) {
       cond += cond?  "AND Supplier LIKE ?" : "Supplier LIKE ?";
       bind += bind? `,%${this.searchForm.Supplier}%`: `%${this.searchForm.Supplier}%`;
@@ -305,8 +264,14 @@ export class EncodePage implements OnInit {
       cond += cond? "AND year = ?": "year = ?";
       bind += bind? `,${this.year}`:`${this.year}`;
     }
-    this.searchQuery.where = cond;
-    this.searchQuery.bind = bind;
+    if( cond ) {
+      this.searchQuery.where = cond + `AND parent_idx = ?`;
+      this.searchQuery.bind = bind +  `, 0`;
+    }
+    else {
+      this.searchQuery.where = cond + 'parent_idx = ?';
+      this.searchQuery.bind = bind + '0';
+    }    
     this.searchQuery.order= 'idx DESC';
     this.currentPage = 1;
     this.loadSearchedData();
@@ -335,6 +300,7 @@ export class EncodePage implements OnInit {
     this.form.post_config_id = 'bir';
     this.form.month = this.month;
     this.form.year = this.year;
+    this.form.TIN = `${this.tin.tin1}-${this.tin.tin2}-${this.tin.tin3}-${this.tin.tin4}`;
     this.post.create( this.form ).subscribe( ( res ) =>{
       console.log( res );
       this.pagination.unshift( res.data )
@@ -357,7 +323,7 @@ month[10] = "October";
 month[11] = "November";
 month[12] = "December";
     let req: LIST = {
-      select: 'idx, Supplier, TIN, TotalAmountOfPurchase, TotalInputTax, TotalAmountDue',
+      select: 'Supplier, TIN, TotalAmountOfPurchase, TotalInputTax, TotalAmountDue',
       extra :{
         'post_config_id' : 'bir',
         // file: true,
@@ -372,7 +338,7 @@ month[12] = "December";
       let options = {
         showLabels: true
       }
-      new Angular2Csv( res.data.posts, `${month[this.month]} , ${this.year}`, options ); 
+      new Angular2Csv( res.data.posts, `${month[this.month]}, ${this.year}`, options ); 
         console.log( 'full load ' , res.data.posts );
       });
   }
@@ -401,7 +367,7 @@ month[12] = "December";
   onClickInput( post ) {
     if( this.checkOwner( post.user_idx) == false ) return console.error('not your post'); 
     // window.open("inputs/"+ post.idx ,"", "width=550,height=600, status=no, menubar=no" );
-    this.router.navigate(['inputs', post.idx])
+    this.router.navigate(['inputs', post.idx, this.month, this.year])
   }
 
   onClickImport( userfile ) {
@@ -411,18 +377,38 @@ month[12] = "December";
 
 
   switchToAllItem() {
+    let month = new Array();
+month[1] = "January";
+month[2] = "February";
+month[3] = "March";
+month[4] = "April";
+month[5] = "May";
+month[6] = "June";
+month[7] = "July";
+month[8] = "August";
+month[9] = "September";
+month[10] = "October";
+month[11] = "November";
+month[12] = "December";
+
     let req: LIST = {
-      select: 'idx, Supplier, TIN, AmountOfPurchase, InputTax, AmountDue',
+      select: 'Supplier, TIN, InvoiceNo, AmountOfPurchase, InputTax, AmountDue',
       extra :{
         'post_config_id' : 'bir',
         // file: true,
         // meta: true
       }
     };
-    req.where = "parent_idx <> 0 AND deleted IS NULL"
+    req.where = `parent_idx <> 0 AND deleted IS NULL`;
+    req.order = 'Supplier ASC';
     this.post.list( req ).subscribe( ( res : POST_LIST_RESPONSE ) =>{
-      console.info('all items -----> ' , res );
+      console.info('all items -----> ' , res.data.posts );
+      let options = {
+        showLabels: true
+      }
+      new Angular2Csv(  res.data.posts, `${month[this.month]}, ${this.year}`, options ); 
     });
+
   }
 
   onChangeFile( userfile ) {

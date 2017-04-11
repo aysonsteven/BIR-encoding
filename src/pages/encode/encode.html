@@ -16,7 +16,7 @@ CALENDAR TEST START
                 <i *ngIf="!showPrevious" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </span>-->
-            <div (click)="onClickPrev()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;</span><span >{{ prevMonths[1]?.m}} {{ prevMonths[1]?.Y}}</span></div>
+            <div (click)="onClickPrev()"><span><i class="fa fa-arrow-left" aria-hidden="true"></i></span></div>
             
 
         </div>
@@ -27,7 +27,7 @@ CALENDAR TEST START
                 <i *ngIf="showNext" class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                 <i *ngIf="!showNext" class="fa fa-arrow-circle-down" aria-hidden="true"></i>
             </span>-->
-            <div  (click)="onClickNext()" ><span >{{ nextMonths[0]?.m}} {{ nextMonths[0]?.Y}}</span> <span> &nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></span></div>   
+            <div  (click)="onClickNext()" ><span> <i class="fa fa-arrow-right" aria-hidden="true"></i></span></div>   
 
         </div>
        
@@ -40,7 +40,7 @@ CALENDAR TEST START
           
           <div class="this-months" *ngIf="showYear">   
                 <ul>
-                    <li class="this-year" *ngFor="let year of listOfYears" (click)="selectNewDate({m:year.m,Y:year.Y})"> {{ year.m }} {{ year.Y }}</li>
+                    <li class="this-year" *ngFor="let year of listOfYears" (click)="selectNewDate({m:year.m,Y:year.Y})"> {{ year.Y }}</li>
                 </ul>
             </div>
         </div>
@@ -75,7 +75,10 @@ modal
       </div>
       <div class="modal-body">
         <input type="text" [(ngModel)]="form.Supplier" class="form-control" placeholder="Supplier">
-        <input type="text" [(ngModel)]="form.TIN" class="form-control tin-form" placeholder="TIN #">
+        <!--<input type="text" [(ngModel)]="form.TIN" class="form-control tin-form" placeholder="TIN #">-->
+        <div class="tin_container">
+          <input type="text" [(ngModel)]="tin.tin1"> - <input type="text" [(ngModel)]="tin.tin2"> - <input type="text" [(ngModel)]="tin.tin3"> - <input type="text" [(ngModel)]="tin.tin4">           
+        </div>
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
     </div>
@@ -94,11 +97,11 @@ modal
             Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
     -->
 
-      <div class="toolbar search_field">
+      <div class=" search_field">
         <input type="text" [(ngModel)]="searchForm.Supplier" placeholder="Supplier                         &#xF002;" class="search" (keydown)="onEnterSearch()">
         <i *ngIf="searchForm.Supplier" class="fa fa-window-close" aria-hidden="true" (click)="onClickClearSearchSupplier()"></i>
       </div>
-      <div class="toolbar search_field">
+      <div class=" search_field">
         <input type="text" [(ngModel)]="searchForm.TIN" placeholder="TIN Number                  &#xF002;" class="search" (keydown)="onEnterSearch()">
         <i *ngIf="searchForm.TIN" class="fa fa-window-close" aria-hidden="true" (click)="onClickClearSearchTIN()"></i>
       </div>
@@ -116,7 +119,7 @@ modal
         
         <table id="fresh-table" class="table table-bordered table-hover table-responsive">
             <thead class="thead-inverse">
-              <th data-field="id">ID</th>
+              <!--<th data-field="id">ID</th>-->
             	<th data-field="name" data-sortable="true">Name of Supplier</th>
             	<th data-field="tin" data-sortable="true">TIN</th>
             	<th data-field="ammount" data-sortable="true">Total ammount</th>
@@ -126,7 +129,7 @@ modal
             </thead>
             <tbody *ngFor="let post of pagination">
                 <tr>
-                	<td scope="row">{{ post.idx }}</td>
+                	<!--<td scope="row">{{ post.idx }}</td>-->
                 	<td><table-component [idx]="post.idx" [type]="'supplier'" [item]="post.Supplier"></table-component></td>
                 	<td><table-component [idx]="post.idx" [type]="'tin'" [item]="post.TIN"></table-component></td>
                 	<td> {{ post.TotalAmountOfPurchase }} </td>
@@ -145,7 +148,7 @@ modal
     [no_of_items_in_one_page] = " limitPerPage "
     [no_of_pages_in_navigator] = " numberPerNav "
     [no_of_current_page] = " currentPage "
-    [show_prev_next] = " true "
+    [show_prev_next] = "true"
     (pageClick)="onPageClick($event)"
   >
   </page-navigation>
@@ -156,3 +159,5 @@ modal
 <!--</ng-table>-->
     </div>
 </div>
+  <hr>
+<footer-component></footer-component>

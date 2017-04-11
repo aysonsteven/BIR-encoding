@@ -38,7 +38,7 @@ modal
         </div>        
         <table id="fresh-table" class="table table-bordered table-hover table-responsive">
             <thead class="thead-inverse">
-              <th data-field="id">ID</th>
+              <!--<th data-field="id">ID</th>-->
               <th data-field="invoice">Invoice No.</th>
             	<th data-field="ammount" data-sortable="true">Vatable Amount</th>
             	<th data-field="tax">Input Tax</th>
@@ -47,8 +47,8 @@ modal
             </thead>
             <tbody *ngFor="let input of inputs" >
                 <tr>
-                	<td>{{ input.idx }}</td>
-                  <td>{{ input.InvoiceNo }}</td>
+                	<!--<td>{{ input.idx }}</td>-->
+                  <td><table-component [idx]="input.idx" [type]="'invoiceno'" [item]="input.InvoiceNo"></table-component></td>
                 	<td>{{ input.AmountOfPurchase }}</td>
                 	<td>{{ input.InputTax }}</td>
                   <td>{{ input.AmountDue }}</td>

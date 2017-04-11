@@ -10,11 +10,11 @@
           <a class="nav-link" routerLink="">Home</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="user.logged" class="nav-link" routerLink="/encode">Encode</a>
+          <a *ngIf="user.logged" class="nav-link" routerLink="/encode/{{ month }}/{{ year }}">Encode</a>
           <a *ngIf="!user.logged" class="nav-link disabled">Encode</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/help">Guidelines</a>
+          <a class="nav-link" routerLink="/help/user">Guidelines</a>
         </li>
 
       </ul>
