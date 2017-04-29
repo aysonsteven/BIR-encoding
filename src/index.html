@@ -1,6 +1,22 @@
 <!doctype html>
 <html>
 <head>
+<style>
+  #d-flex {
+    margin-top: 9em;
+  }
+  #fa {
+    position: absolute;
+    margin-top: 3.7em;
+    color: black;
+  }
+  #birimage {
+    width: 23em;
+    height: 15em;
+    border-radius: 30px;
+    border: 2px solid palegoldenrod;
+  }
+</style>
   <meta charset="utf-8">
   <title>BIR</title>
   <base href="/">
@@ -11,7 +27,15 @@
   <link rel="stylesheet" href="assets/font-awesome-v4/css/font-awesome.min.css">
 </head>
 <body>
-  <app-root></app-root>
+
+  <bir>
+    <div id="d-flex" class="d-flex justify-content-center">
+      <img id="birimage" src="./assets/BIR2.jpg" alt="">
+      <i id="fa" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    </span>
+    </div>
+
+  </bir>
     <script src="assets/bootstrap-v4/jquery-3.2.0.min.js"></script>
   <script src="assets/bootstrap-v4/tether.min.js"></script>
   <script src="assets/bootstrap-v4/js/bootstrap.min.js"></script>

@@ -68,7 +68,7 @@ modal
         <!--<input type="text" [(ngModel)]="form.TIN" class="form-control tin-form" placeholder="TIN #">-->
         <div class="form-inline tin_container">
           <br/>
-          <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin1" id="tin1" #tin1 (keyup)="onChangeInput(tin1, $event)" maxlength="3"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin2" id="tin2" #tin2 maxlength="3" (keyup)="onChangeInput(tin2, $event)"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin3" id="tin3" #tin3 (keyup)="onChangeInput(tin3, $event)" maxlength="3"> - <input class="form-control form-control-sm" type="text" [(ngModel)]="tin.tin4" maxlength="4" id="tin4" #tin4 (keyup)="onChangeInput(tin4, $event)">           
+          <input class="form-control form-control-sm" type="number" [(ngModel)]="tin.tin1" id="tin1" #tin1 (keyup)="onChangeInput(tin1, $event)" (keydown)="onTab($event)" maxlength="3"> - <input class="form-control form-control-sm" type="number" [(ngModel)]="tin.tin2" id="tin2" #tin2 maxlength="3" (keyup)="onChangeInput(tin2, $event)" (keydown)="onTab($event)"> - <input class="form-control form-control-sm" type="number" [(ngModel)]="tin.tin3" id="tin3" #tin3 (keyup)="onChangeInput(tin3, $event)" (keydown)="onTab($event)" maxlength="3"> - <input class="form-control form-control-sm" type="number" [(ngModel)]="tin.tin4" maxlength="4" id="tin4" #tin4 (keyup)="onChangeInput(tin4, $event)" (keydown)="onTab($event, tin4)">           
         </div>
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>

@@ -8,6 +8,8 @@
 # dependencies
 /node_modules
 bir-backend
+release-builds
+electron
 # IDEs and editors
 /.idea
 .project

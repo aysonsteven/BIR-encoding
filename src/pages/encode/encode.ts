@@ -208,7 +208,10 @@ export class EncodePage implements OnInit {
     this.user.data().subscribe( res =>{
       this.userdata = res.data.user;
       console.info( 'ENCODE CLASS userdata -->' , res.data.user.idx );
-    }, error => this.user.alert( error ) );
+    }, error => {
+      this.router.navigate(['']);
+      this.user.alert( error );
+    } );
   }
 
   onClickEnableEdit() {
@@ -265,20 +268,29 @@ export class EncodePage implements OnInit {
       bind += bind? `,${this.year}`:`${this.year}`;
     }
     if( cond ) {
-      this.searchQuery.where = cond + `AND parent_idx = ?`;
+      this.searchQuery.where = cond + `AND parent_idx = ? AND deleted IS NULL`;
       this.searchQuery.bind = bind +  `, 0`;
     }
     else {
-      this.searchQuery.where = cond + 'parent_idx = ?';
-      this.searchQuery.bind = bind + '0';
+      this.searchQuery.where = cond + 'parent_idx = ? AND deleted ?';
+      this.searchQuery.bind = bind + '0, IS NULL';
     }    
     this.searchQuery.order= 'idx DESC';
     this.currentPage = 1;
     this.loadSearchedData();
   }
 
+  onTab( event, val? ) {
+    if( event.keyCode == 9 ) event.preventDefault();
+    if( event.keyCode == 69 ) event.preventDefault();
+    if( event.keyCode == 189 ) event.preventDefault();
+    if( event.keyCode == 107 ) event.preventDefault();
+    if( event.keyCode == 110 ) event.preventDefault();
+    if( document.activeElement.id == 'tin4' && val.value.length == 4 && (event.keyCode >= 48 && event.keyCode <= 57)) event.preventDefault();
 
+  }
   onChangeInput(val, event) {
+    
     if(document.activeElement.id == 'tin1' && val.value.length == 3) return document.getElementById("tin2").focus();
     if(document.activeElement.id == 'tin2' && val.value.length == 3) return document.getElementById("tin3").focus();
     if(document.activeElement.id == 'tin3' && val.value.length == 3) return document.getElementById("tin4").focus();
@@ -363,13 +375,38 @@ month[12] = "December";
   onClickDelete( post ) {
     if( this.checkOwner( post.user_idx ) == false ) return console.error('not your post'); 
     if( ! confirm('Are you sure you want to delete ' + post.Supplier ) ) return;
-    this.post.delete( parseInt(post.idx) ).subscribe( ( res ) =>{
-      console.info(res );
-      this.pagination = this.pagination.filter( ( file) => file.idx != post.idx);
-    }, err => this.post.alert( err ));
+    this.deleteEachInputs( post.idx, callback =>{
+      this.post.delete( parseInt(post.idx) ).subscribe( ( res ) =>{
+        console.info( res );
+        this.pagination = this.pagination.filter( ( file) => file.idx != post.idx);
+      }, err => this.post.alert( err ));
+    } );
+
   }
   checklogin() {
 
+  }
+
+  deleteEachInputs( postidx , callback? ) {
+    let req : LIST = {};
+    req.where = "parent_idx = ?";
+    req.bind = postidx;
+    this.post.list( req ).subscribe( ( res: POST_LIST_RESPONSE ) =>{
+      res.data.posts.forEach( element => {
+        this.deleteInputs( element );
+        
+      });
+    }, error => this.post.alert( error ) );
+    callback();
+  }
+
+  deleteInputs( element ) {
+    if( element.deleted != '1' ){
+      this.post.delete( parseInt( element.idx.toString() )).subscribe( res =>{
+        console.info( 'deleted input' );
+      } );
+      console.info('to delete');
+    }
   }
 
   checkOwner( idx ) {

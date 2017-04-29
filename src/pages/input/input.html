@@ -17,8 +17,8 @@ modal
         </button>
       </div>
       <div class="modal-body">
+        <input type="text" [(ngModel)]="formInput.InvoiceNo" placeholder="Invoice Number">        
         <input type="text" [(ngModel)]="formInput.AmountDue" placeholder="Total Amount">
-        <input type="text" [(ngModel)]="formInput.InvoiceNo" placeholder="Invoice Number">
         <button class="btn btn-default submit-btn btn-block" (click)="onClickPost()">Submit</button>
       </div>
     </div>
